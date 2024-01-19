@@ -2,8 +2,11 @@ const express =require("express");
 const app= express();
 const mongoose=require("mongoose");
 const MONGO_URI="mongodb+srv://dineshmohanty:abcd@nodeapp.lbishb2.mongodb.net/?retryWrites=true&w=majority"
-const userDB=require("./models/mongoDB")
+const userDB=require("./models/UserDB")
 const userRoute= require("./routes/userRoute")
+const profileRoute=require("./routes/profileRoute")
+const cookieParser= require("cookie-parser");
+const {checkForAuthenticationCookie}=require("./middleware/authentication")
 
 
 
@@ -14,7 +17,11 @@ app.set("view engine","ejs");
 app.set("views",path.resolve("./views"))
 
 app.use(express.urlencoded({extended:false}))
+app.use(cookieParser());
+app.use(checkForAuthenticationCookie('token'));
+
 app.use("/usr",userRoute)
+app.use("/profile",profileRoute)
 
 // userDB.create({
 //     firstName:"dinesh",
@@ -23,7 +30,9 @@ app.use("/usr",userRoute)
 // }).then((res)=>console.log(res)).catch((err)=>{console.log(err)})
 
 app.get("/",(req,res)=>{
-    return res.render("home")
+    return res.render("home",{
+        user:req.user,
+    })
 })
 console.log(MONGO_URI)
 mongoose.connect(MONGO_URI).

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head.ejs")%>
+    <title>SignUp</title>
+
+</head>
+<body>
+    <%- include("./partials/navbar.ejs")%>
+    <div class="container mt-2">
+        <% if (locals.profiles) { %>
+            <% for( let index = 0; index < profiles.length; index++ ) { %>
+
+                <div class="card" style="width: 50rem;margin-bottom: 4rem;">
+                    <div class="card-body">
+                      <h5 class="card-title"><%=`${profiles[index].firstName} ${profiles[index].lastName}` %></h5>
+                      <h6 class="card-subtitle mb-2 text-muted"><%=`${profiles[index].age} ${profiles[index].gender}` %></h6>
+                      <p class="card-text"><%=profiles[index].description%></p>
+                      <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+                  </div>
+            <% } %>
+         
+        <% } %>
+    </div>
+
+    <%- include("./partials/scripts.ejs")%>
+    
+</body>
+</html>
