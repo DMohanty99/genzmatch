@@ -8,7 +8,7 @@
 <body>
     <%- include("./partials/navbar.ejs")%>
     <div class="container">
-        <form action="/profile" method="post">
+        <form action="/profile" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="firstName">First Name</label>
                 <input name="firstName" type="text" class="form-control" id="firstName" aria-describedby="firstName" placeholder="Enter First Name">
@@ -34,8 +34,8 @@
               <label class="form-check-label" for="inlineRadio2">Female</label>
             </div>
             <div class="form-group">
-              <label for="profileImageURL">Upload Image</label>
-              <input name="profileImageURL" type="file" class="form-control" id="profileImageURL" aria-describedby="profileImageURL" placeholder="Enter description Details">
+              <label for="profileImage">Upload Image</label>
+              <input name="profileImage" type="file" class="form-control" id="profileImage" aria-describedby="profileImage" placeholder="Enter description Details">
             </div>
             
             <button type="submit" class="btn btn-primary">Submit</button>

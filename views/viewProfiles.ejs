@@ -9,18 +9,30 @@
     <%- include("./partials/navbar.ejs")%>
     <div class="container mt-2">
         <% if (locals.profiles) { %>
+            <div class="row">
             <% for( let index = 0; index < profiles.length; index++ ) { %>
-
-                <div class="card" style="width: 50rem;margin-bottom: 4rem;">
+                <div class="col">
+                <div class="card" style="width: 20rem;margin-bottom: 1rem;">
                     <div class="card-body">
+                        <img class="card-img-top" src=<%=profiles[index].profileImageURL%> alt="Card image cap">
                       <h5 class="card-title"><%=`${profiles[index].firstName} ${profiles[index].lastName}` %></h5>
                       <h6 class="card-subtitle mb-2 text-muted"><%=`${profiles[index].age} ${profiles[index].gender}` %></h6>
                       <p class="card-text"><%=profiles[index].description%></p>
-                      <a href="#" class="card-link">Card link</a>
+                      <% const isprofileLiked =likes.find((obj)=>obj.profileLiked==`${profiles[index]._id}`)%>
+                      <!-- <h1>hi <%= `${profiles[index]._id}`%></h1> -->
+                      <% if (isprofileLiked) { %>
+                        <form action="./profile/dislike/<%=profiles[index]._id%>" method="post">
+                            <button type="submit" class="btn btn-primary">Dislike</button></form>
+                      <% } else  {%>
+                      <form action="./profile/like/<%=profiles[index]._id%>" method="post">
+                        <button type="submit" class="btn btn-primary">Like</button></form>
+                    <%}%>
                       <a href="#" class="card-link">Another link</a>
                     </div>
                   </div>
-            <% } %>
+                </div>
+            <% } %>w
+            <div>
          
         <% } %>
     </div>
