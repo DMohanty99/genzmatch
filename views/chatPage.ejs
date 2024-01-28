@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head.ejs")%>
+    <title>SignUp</title>
+
+</head>
+<body>
+    <%- include("./partials/navbar.ejs")%>
+
+<div class="container-fluid text-center bg-info" >
+  <div id="messageList">
+  <%for(let i=0;i<messages.length;i++){%>
+    <% if (messages[i].from==profileId) { %>
+      <div class="row py-4" >
+        <div class="col">
+          <div class="card text-center bg-primary" style=" margin-right: 60%;">
+              <div class="card-body">
+                <!-- <h5 class="card-title">Card title</h5> -->
+                <p class="card-text text-white"><%=messages[i].chat%></p>
+              </div>
+            </div>
+        </div>
+      </div>
+    <% } else {%>
+    
+    
+    <div class="row py-4">
+
+        <div class="col">
+            <div class="card bg-primary text-center" style=" margin-left: 60%; ">
+                <div class="card-body text-center">
+                  <!-- <h5 class="card-title">Card title</h5> -->
+                  <p class="card-text text-white"><%=messages[i].chat%></p>
+                </div>
+              </div>
+          </div>
+
+        </div>
+    <%}%>    
+    <%}%>  
+    <% function createElementFromMsg(msg){ %> 
+      <div class="row py-4" >
+        <div class="col">
+          <div class="card text-center bg-primary" style=" margin-right: 60%;">
+              <div class="card-body">
+                <!-- <h5 class="card-title">Card title</h5> -->
+                <p class="card-text text-white"><%=msg%></p>
+              </div>
+            </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+    <div class="row py-4">
+        <form action="/profile/chat/<%=profileId%>" method="post" id="chatForm" >
+            <div class="form-group ">
+            <textarea name="chat"  class="form-control" style="width: 100%" id="chatID" >
+            </textarea>
+          </div>
+
+            <button class="btn btn-primary float-right" >send</button>
+            
+        </form>
+        
+    </div>
+
+  </div>
+
+
+<%- include("./partials/scripts.ejs")%>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  var socket = io();
+var myProfileId="<%=myProfile._id%>"
+console.log(myProfileId)
+socket.emit("register",myProfileId);
+var form = document.getElementById('chatForm');
+var input = document.getElementById('chatID');
+console.log("a",form,input.value)
+//console.log(input)
+//const formData = new FormData(form);
+form.addEventListener('submit',  function(e) {
+  console.log(input.value);
+  if (input.value) {
+    const temp=input.value;
+    socket.emit('chatMessage', {to:"<%=profileId%>",temp});
+    console.log("hi",formData)
+}
+}
+);
+socket.on("recieveMessage",(msg)=>{
+//jQuery
+  $("#messageList").append(`
+    <div class="row py-4">
+        <div class="col">
+            <div class="card text-center bg-primary" style="margin-right: 60%;">
+                <div class="card-body">
+                    <p class="card-text text-white">${msg}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+`);
+//console.log(msg);
+})
+</script>
+    
+</body>
+</html>

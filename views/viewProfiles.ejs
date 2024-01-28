@@ -11,6 +11,7 @@
         <% if (locals.profiles) { %>
             <div class="row">
             <% for( let index = 0; index < profiles.length; index++ ) { %>
+              <%if(!locals.likes || profiles[index].createdBy!=user._id){%>
                 <div class="col">
                 <div class="card" style="width: 20rem;margin-bottom: 1rem;">
                     <div class="card-body">
@@ -18,20 +19,33 @@
                       <h5 class="card-title"><%=`${profiles[index].firstName} ${profiles[index].lastName}` %></h5>
                       <h6 class="card-subtitle mb-2 text-muted"><%=`${profiles[index].age} ${profiles[index].gender}` %></h6>
                       <p class="card-text"><%=profiles[index].description%></p>
+                      <% if(locals.likes){%>
                       <% const isprofileLiked =likes.find((obj)=>obj.profileLiked==`${profiles[index]._id}`)%>
+                      <% const amILiked=likesOpp.find((obj)=>obj.likedBy==`${profiles[index].createdBy}`)%>
                       <!-- <h1>hi <%= `${profiles[index]._id}`%></h1> -->
+                      
+                       
+
                       <% if (isprofileLiked) { %>
                         <form action="./profile/dislike/<%=profiles[index]._id%>" method="post">
                             <button type="submit" class="btn btn-primary">Dislike</button></form>
+                            <%if(amILiked){%>
+                           
+                            <form action="./profile/chat/<%=profiles[index]._id%>" method="get">
+                            <button type="chat" class="btn btn-primary">chat</button></form>
+                            <%}%>
                       <% } else  {%>
                       <form action="./profile/like/<%=profiles[index]._id%>" method="post">
                         <button type="submit" class="btn btn-primary">Like</button></form>
+                    <%}%>
                     <%}%>
                       <a href="#" class="card-link">Another link</a>
                     </div>
                   </div>
                 </div>
-            <% } %>w
+                <%}%>
+            <% } %>
+
             <div>
          
         <% } %>

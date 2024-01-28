@@ -13,14 +13,14 @@
             <a class="nav-link" href="/profile">View Profiles</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/profile/create">Create/Update Profile</a>
+            <a class="nav-link" href="/profile/create">Create Profile</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%=`${locals.user.firstName} ${locals.user.lastName}`%>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="/profile">Profile</a>
+              <a class="dropdown-item" href="/profile/self">Profile</a>
               <a class="dropdown-item" href="#">Settings</a>
               <a class="dropdown-item" href="/usr/logout">Log Out</a>
               

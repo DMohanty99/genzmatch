@@ -15,7 +15,7 @@ router.get("/signin",(req,res)=>{
 router.post("/signup", async(req,res)=>{
     const {firstName,lastName,age,email,password} =req.body;
     const result=await  userModel.create({firstName,lastName,age,email,password});
-    console.log(result)
+    //console.log(result)
     
     return res.redirect("/");
    
@@ -28,7 +28,7 @@ router.post("/signin",async(req,res)=>{
     if(!token) return res.render("signin",{
         "error":"incorrect username or password"
     })
-    console.log("token",token);
+    //console.log("token",token);
     return res.cookie("token",token).redirect("/");
      
 })
